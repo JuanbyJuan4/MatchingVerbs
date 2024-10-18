@@ -1,0 +1,12 @@
+[
+    { "english": "jump", "spanish": "saltar", "englishSentence": "I jumped over the fence.", "spanishSentence": "Salté la cerca." },
+    { "english": "run", "spanish": "correr", "englishSentence": "He runs every morning.", "spanishSentence": "Él corre todas las mañanas." },
+    { "english": "swim", "spanish": "nadar", "englishSentence": "We swam across the lake.", "spanishSentence": "Nadamos por el lago." },
+    { "english": "read", "spanish": "leer", "englishSentence": "She reads a lot of books.", "spanishSentence": "Ella lee muchos libros." },
+    { "english": "write", "spanish": "escribir", "englishSentence": "He is writing a letter.", "spanishSentence": "Él está escribiendo una carta." },
+    { "english": "sing", "spanish": "cantar", "englishSentence": "They sang a beautiful song.", "spanishSentence": "Cantaron una canción hermosa." },
+    { "english": "eat", "spanish": "comer", "englishSentence": "I ate a delicious meal.", "spanishSentence": "Comí una comida deliciosa." },
+    { "english": "drink", "spanish": "beber", "englishSentence": "She drinks coffee every morning.", "spanishSentence": "Ella bebe café cada mañana." },
+    { "english": "sleep", "spanish": "dormir", "englishSentence": "He slept for eight hours.", "spanishSentence": "Durmió ocho horas." },
+    { "english": "talk", "spanish": "hablar", "englishSentence": "We talked about the project.", "spanishSentence": "Hablamos sobre el proyecto." }
+]

@@ -1,0 +1,341 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo base del header */
+#header {
+    width: 100vw; /* Ocupa todo el ancho de la ventana */
+    height: 10vh; /* Altura del header */
+    background: linear-gradient(135deg, #1faad2, #0f748c); /* Fondo degradado */
+    text-align: center; /* Centrar texto */
+    font-size: 20px; /* Tamaño de fuente */
+    color: #ffffff; /* Color del texto */
+    padding: 1% 0; /* Espaciado vertical */
+    font-family: 'Nunito', sans-serif; /* Tipo de fuente */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    position: sticky; /* Posición relativa para los elementos secundarios */
+}
+
+/* Estilo del h1 dentro del header */
+#header h1 {
+    margin: 0; /* Eliminar margen del encabezado */
+    font-weight: 700; /* Grosor más fuerte */
+    text-transform: uppercase; /* Texto en mayúsculas */
+    letter-spacing: 1px; /* Espaciado entre letras */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra de texto */
+}
+
+/* Estilo para el subtexto opcional */
+#header p {
+    margin: 0; /* Sin margen */
+    font-size: 20px; /* Tamaño del subtexto */
+    font-weight: 300; /* Grosor ligero */
+    color: #ffffff; /* Color del subtexto */
+    opacity: 0.8; /* Transparencia ligera */
+    position: absolute; /* Posición absoluta para centrar */
+    bottom: 10px; /* Posicionar en la parte inferior del header */
+    left: 50%; /* Centrar horizontalmente */
+    transform: translateX(-50%); /* Ajuste para centrar */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); /* Sombra de texto */
+}
+
+/* Estilo del tablero */
+#tablero {
+    width: 100vw;
+    height: 80vh;
+    background: linear-gradient(135deg, #002642, #218380);
+    padding: 1%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centra las cartas horizontalmente */
+    align-items: flex-start; /* Alinea las cartas en la parte superior */
+    gap: 1rem; /* Espacio entre cartas */
+    margin: 0; /* Elimina el margen predeterminado */
+}
+
+/* Estilo de cada carta */
+.carta {
+    perspective: 1000px; /* Proporciona profundidad a la animación */
+    margin: 0.5% 1%; /* Reduce margen superior/inferior y mantiene lateral */
+    width: 12vw; /* Ancho de la carta */
+    height: 15vh; /* Altura de la carta más rectangular */
+    position: relative;
+    border-radius: 15px; /* Esquinas redondeadas */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); /* Sombra para profundidad */
+    transition: transform 0.4s ease, box-shadow 0.4s ease; /* Transiciones más suaves */
+    overflow: hidden; /* Ocultar cualquier contenido fuera de los bordes */
+}
+
+/* Efecto del reflejo */
+.carta::before {
+    content: '';
+    position: absolute;
+    top: 0; /* Ajustado para que esté en la parte superior de la carta */
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), transparent 70%); /* Reflejo más visible */
+    transform: rotate(-45deg);
+    opacity: 0.6; /* Más opaco para mejor visibilidad */
+    pointer-events: none; /* Ignorar eventos en este pseudo-elemento */
+    z-index: 2; /* Asegúrate de que esté por encima de la carta */
+    transition: transform 0.4s ease; /* Suave transición para el movimiento */
+}
+
+/* Efecto del reflejo al pasar el cursor */
+.carta:hover::before {
+    transform: rotate(-45deg) translateY(-10%); /* Mover hacia arriba al pasar el mouse */
+}
+
+/* Efecto del reflejo al hacer clic */
+.carta:active::before {
+    transform: rotate(-45deg) translateY(-20%); /* Mover más arriba al hacer clic */
+}
+
+/* Efecto de sombra y movimiento más sutil al pasar el cursor */
+.carta:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35); /* Sombra más ligera */
+    transform: scale(1.05); /* Aumento de escala menor */
+}
+
+/* Efecto cuando la carta está volteada */
+.carta.volteada .inner-card {
+    transform: rotateY(180deg); /* Voltea la carta 180 grados */
+    pointer-events: none; /* Deshabilita el clic en este elemento */
+}
+
+/* Efecto del reflejo al voltear la carta */
+.carta.volteada::before {
+    transform: rotateY(180deg) rotate(-45deg); /* Reflejo gira junto con la carta */
+}
+
+/* Estilo para la parte interna de la carta */
+.carta .inner-card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d; /* Mantener la estructura 3D */
+    transition: transform 0.8s; /* Duración de la animación */
+}
+
+/* Parte frontal y trasera de la carta */
+.carta .front,
+.carta .back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden; /* Oculta la cara trasera durante la rotación */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: white; /* Color del texto en las cartas */
+    border-radius: 15px; /* Esquinas redondeadas */
+}
+
+/* Parte frontal de la carta con diseño */
+.carta .front {
+    background: linear-gradient(135deg, #690375, #f39c12); /* Fondo degradado */
+    color: #333; /* Texto más oscuro para contraste */
+}
+
+/* Parte trasera de la carta con diseño */
+.carta .back {
+    background: linear-gradient(135deg, #DD1C1A, #f39c12); /* Fondo degradado */
+    color: white; /* Texto en blanco para la parte trasera */
+    transform: rotateY(180deg); /* Parte trasera está rotada inicialmente */
+    pointer-events: none !important;/* Deshabilita el clic en este elemento */
+}
+
+/* Rombo de fondo en la parte frontal */
+.carta .front::before {
+    content: '';
+    position: absolute;
+    top: 50%; /* Centrado vertical */
+    left: 50%; /* Centrado horizontal */
+    width: 60%; /* Tamaño del rombo */
+    height: 60%; /* Tamaño del rombo */
+    background: #002642; /* Color del rombo */
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); /* Forma de rombo */
+    transform: translate(-50%, -50%); /* Centrar */
+    z-index: 1; /* Por detrás del texto */
+}
+
+/* Rombo de fondo en la parte trasera */
+.carta .back::before {
+    content: '';
+    position: absolute;
+    top: 50%; /* Centrado vertical */
+    left: 50%; /* Centrado horizontal */
+    width: 110%; /* Tamaño del rombo */
+    height: 110%; /* Tamaño del rombo */
+    background: rgba(255, 255, 255, .1); /* Color blanco semi-transparente */
+    transform: translate(-50%, -50%) rotate(60deg); /* Centrar y rotar */
+    z-index: 1; /* Por detrás del texto */
+}
+
+/* Asegurarse de que el texto esté por encima del rombo */
+.carta .back .text {
+    position: relative; /* Para asegurar que el texto esté por encima */
+    z-index: 2; /* Por encima del rombo */
+    font-size: 20px; /* Tamaño de fuente del texto */
+}
+
+/* Estilo base del botón minimalista */
+#addCardBtn {
+    background-color: #1faad2; /* Color de fondo sólido */
+    border: none; /* Sin borde para un aspecto más limpio */
+    color: #ffffff; /* Color de texto blanco */
+    padding: 12px 30px; /* Tamaño del botón un poco más grande */
+    font-size: 18px; /* Tamaño de la fuente */
+    font-family: 'Nunito', Helvetica, Arial, sans-serif;
+    font-weight: 600; /* Grosor medio */
+    border-radius: 25px; /* Esquinas más redondeadas */
+    cursor: pointer; /* Cambiar cursor a mano */
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, transform 0.3s; /* Transiciones suaves */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra más sutil */
+    margin-left: 25%;
+}
+
+/* Efecto del botón al pasar el mouse */
+#addCardBtn:hover {
+    background-color: #3ec3e0; /* Color más claro al pasar el mouse */
+    color: #fff; /* Color de texto blanco */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
+    transform: translateY(-2px); /* Efecto de elevar el botón */
+}
+
+/* Estilo del botón al hacer clic */
+#addCardBtn:active {
+    background-color: #156e90; /* Color más oscuro para indicar clic */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra más ligera al hacer clic */
+    transform: translateY(0); /* Restablecer posición al hacer clic */
+}
+
+/* Contenedor centrado del botón */
+#button-container {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #218380;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+@keyframes colorChange {
+    0% { color: #FF5733; } /* Color inicial */
+    33% { color: #ff9633; } /* Color intermedio 1 */
+    66% { color: #4b33ff; } /* Color intermedio 3 */
+    100% { color: #FF5733; } /* Regresa al color inicial */
+}
+/* Estilos para el mensaje de victoria */
+#victoryMessage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(173, 216, 230, 0.9); /* Fondo azul más intenso pero suave */
+    background-image: linear-gradient(225deg, 
+        #c6fe8f 0%, 
+        #b0f995 10%, 
+        #98f29b 20%, 
+        #80e89f 30%, 
+        #68dba1 40%, 
+        #50cca0 50%, 
+        #3abd9e 60%, 
+        #25af9c 70%, 
+        #0da49a 80%, 
+        #009a9a 90%, 
+        #00939a 100%);
+    color: white; /* Color del texto negro para mejor legibilidad */
+    font-size: 26px; /* Tamaño de fuente más grande */
+    padding: 20px 30px; /* Relleno interno */
+    border-radius: 20px; /* Esquinas redondeadas más pronunciadas */
+    z-index: 1000; /* Asegúrate de que se muestre por encima */
+    display: block; /* Mostrar */
+    text-align: center; /* Alinear texto al centro */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    animation: fadeIn 0.5s; /* Añadir la animación */
+    font-family: Verdana, Geneva, Tahoma, sans-serif, sans-serif; /* Usar Arial o una fuente sans-serif moderna */
+    text-transform: uppercase;
+}
+
+/* Animación de desvanecimiento */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#victoryMessage img {
+    width: 100px; /* Ajusta el tamaño de la imagen */
+    margin-top: 1rem; /* Espaciado superior */
+}
+
+#victoryMessage button {
+    background-color: #0077ff; /* Color de fondo del botón */
+    color: #ffffff; /* Color de texto del botón */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Esquinas redondeadas */
+    padding: 0.5rem 1rem; /* Espaciado interior */
+    cursor: pointer; /* Cambiar cursor al pasar el mouse */
+    transition: background-color 0.3s; /* Transición suave */
+    font-size: 16px; /* Tamaño de fuente del botón */
+}
+
+#victoryMessage button:hover {
+    background-color: #005bb5; /* Color al pasar el mouse */
+}
+#goatText{
+    animation: colorChange 1.5s linear infinite;
+}
+
+#reiniciar{
+    background-color: #002642; /* Color de fondo (verde) */
+    color: white;              /* Color del texto */
+    border: rgba(0, 0, 0, 0);
+    border-radius: 5px;
+    padding: 5%;
+}
+#reiniciar:hover{
+    background-color: #0f748c;
+    cursor: pointer; /* Para que se cambie la imagen del mouse a una que signifique que es cliqueable */
+    transform: translateY(5%)
+}
+#display{
+    margin-left: 15%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+}
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 8px;
+    display: none;
+    z-index: 1000;
+}
+
+.modal-content {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+}
